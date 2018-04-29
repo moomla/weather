@@ -11,7 +11,11 @@ import Foundation
 
 class CitiesFileDataProvider: CitiesDataProvider {
     func citiesList() -> [City]? {
-        if let path = Bundle.main.path(forResource: "cities", ofType: "txt") {
+        return citiesListFromFileNamed("cities")
+    }
+    
+    func citiesListFromFileNamed(_ file: String) -> [City]? {
+        if let path = Bundle.main.path(forResource: file , ofType: "txt") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 let decoder = JSONDecoder()

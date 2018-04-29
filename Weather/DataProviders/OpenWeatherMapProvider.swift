@@ -41,7 +41,7 @@ class OpenWeatherMapDataProvider: WeatherDataProvider {
         let urlStr = WEATHER_ICON_URL + iconCode + ".png"
         
         guard let url = URL(string: urlStr) else {
-            completion(nil, error)
+            completion(nil, nil)
             return
         }
         
@@ -93,7 +93,7 @@ class OpenWeatherMapDataProvider: WeatherDataProvider {
             let weatherResponce = try decoder.decode(WeatherDataServerResponce.self, from: jsonData)
             return WeatherData(response: weatherResponce)
         } catch {
-            print("error trying to convert data to JSON " + error)
+            print("error trying to convert data to JSON " + error.localizedDescription)
             return nil
         }
     }

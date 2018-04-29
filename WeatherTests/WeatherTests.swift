@@ -11,26 +11,25 @@ import XCTest
 
 class WeatherTests: XCTestCase {
     
+    var dataProvider: WeatherService? = WeatherService()
+    var citiesDataProvider: CitiesFileDataProvider = CitiesFileDataProvider()
+    
     override func setUp() {
         super.setUp()
-        
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testWhenEmptyList_noCitiesAreReturned() {
+        let cities = citiesDataProvider.citiesListFromFileNamed("cities_empty")
+        XCTAssertNil(cities)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testWhenUsingMockList_2CitiesAreReturned() {
+        let cities = citiesDataProvider.citiesListFromFileNamed("cities_mock")
+        XCTAssertEqual(cities?.count, 2)
     }
     
 }
