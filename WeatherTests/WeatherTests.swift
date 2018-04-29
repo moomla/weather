@@ -23,12 +23,16 @@ class WeatherTests: XCTestCase {
     }
     
     func testWhenEmptyList_noCitiesAreReturned() {
-        let cities = citiesDataProvider.citiesListFromFileNamed("cities_empty")
+        let testBundle = Bundle(for: type(of: self))
+        let pathUrl = testBundle.url(forResource: "cities_empty", withExtension: "txt")
+        let cities = citiesDataProvider.citiesListFromFileAtPath(pathUrl)
         XCTAssertNil(cities)
     }
     
     func testWhenUsingMockList_2CitiesAreReturned() {
-        let cities = citiesDataProvider.citiesListFromFileNamed("cities_mock")
+        let testBundle = Bundle(for: type(of: self))
+        let pathUrl = testBundle.url(forResource: "cities_mock", withExtension: "txt")
+        let cities = citiesDataProvider.citiesListFromFileAtPath(pathUrl)
         XCTAssertEqual(cities?.count, 2)
     }
     
