@@ -13,9 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+         if let navViewController = window?.rootViewController as? UINavigationController {
+            if let citiesViewController = navViewController.viewControllers[0] as? CitiesViewController {
+                citiesViewController.dataProvider = WeatherService()
+            }
+         }
         return true
     }
 
