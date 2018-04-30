@@ -15,7 +15,7 @@ let WEATHER_ICON_URL = "http://openweathermap.org/img/w/"
 class OpenWeatherMapDataProvider: WeatherDataProvider {
     
     func loadWeather(in city: City, metricSystem: DegreesMetricSystem, completion: @escaping (WeatherData?, Error?) -> ()) {
-        guard let url = buildWeatherUrlWithParameters(in: city, metricSystem: metricSystem) else {
+        guard let url = buildWeatherUrlWithParameters(in: city, metricSystem: metricSystem) else { //failure in url building
             notifyOnError(completion as! (Any?, Error?) -> (), error: nil)
             return
         }
@@ -27,7 +27,8 @@ class OpenWeatherMapDataProvider: WeatherDataProvider {
                return
             }
             
-            if let weather = self.parseWeatherJson(jsonData: data) {
+            if let weatherResponse = JsonParser<WeatherDataServerResponce>.parseJson(jsonData: data) {
+                let weather = WeatherData(response:weatherResponse)
                 OperationQueue.main.addOperation({
                     completion(weather, nil)
                 })
@@ -85,17 +86,6 @@ class OpenWeatherMapDataProvider: WeatherDataProvider {
         }
         
         return URL(string: urlStr)
-    }
-    
-    private func parseWeatherJson(jsonData: Data) -> WeatherData? {
-        let decoder = JSONDecoder()
-        do {
-            let weatherResponce = try decoder.decode(WeatherDataServerResponce.self, from: jsonData)
-            return WeatherData(response: weatherResponce)
-        } catch {
-            print("error trying to convert data to JSON " + error.localizedDescription)
-            return nil
-        }
     }
     
 }

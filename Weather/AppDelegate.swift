@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
          if let navViewController = window?.rootViewController as? UINavigationController {
             if let citiesViewController = navViewController.viewControllers[0] as? CitiesViewController {
-                citiesViewController.dataProvider = WeatherService()
+                citiesViewController.dataProvider = WeatherService.init(weatherProvider: DataProvidersFactory.weatherDataProvider(),
+                                                                        citiesDataProvider: DataProvidersFactory.citiesDataProvider())
             }
          }
         return true

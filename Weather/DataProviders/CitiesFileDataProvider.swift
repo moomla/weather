@@ -17,7 +17,7 @@ class CitiesFileDataProvider: CitiesDataProvider {
     }
     
     func citiesListFromFileAtPath(_ urlPath: URL?) -> [City]? {
-        if let citiesList = JsonReader<CitiesList>.objectFromFileAtPath(urlPath) {
+        if let citiesList = JsonParser<CitiesList>.objectFromFileAtPath(urlPath) {
             return citiesList.cities
         }
         return nil

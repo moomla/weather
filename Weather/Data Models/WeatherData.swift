@@ -61,15 +61,16 @@ struct WeatherDataServerResponce: Codable {
 }
 
  struct WeatherData {
-    let id: Int
-    let name: String
-    let country: String
-    let weatherDescription: String
-    let icon: String
-    var temp: Float
-    var temp_min: Float
-    var temp_max: Float
-    let code: Int
+    var id: Int = 0
+    var name: String = ""
+    var country: String = ""
+    var weatherDescription: String = ""
+    var icon: String = ""
+    var code: Int = 0
+    
+    var temp: Float = 0
+    var temp_min: Float = 0
+    var temp_max: Float = 0
     var metricSystem: DegreesMetricSystem = .celsius {
         willSet(newMetricSystem) {
             if newMetricSystem != metricSystem {
@@ -86,6 +87,7 @@ struct WeatherDataServerResponce: Codable {
         }
     }
     
+    init(){}
     
     init(response: WeatherDataServerResponce) {
         id = response.id
@@ -98,6 +100,5 @@ struct WeatherDataServerResponce: Codable {
         weatherDescription = weather.description
         icon = weather.icon
         code = weather.id
-    }
-    
+    }    
 }

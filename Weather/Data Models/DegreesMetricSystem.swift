@@ -22,10 +22,10 @@ enum DegreesMetricSystem: String, Codable {
     }
     
     static func celsius2Fahrenheit(_ degrees: Float) -> Float{
-        return (degrees - 32) / 1.8
+        return (degrees * 1.8) + 32
     }
     
     static func fahrenheit2Celsius(_ degrees: Float) -> Float{
-        return (degrees * 1.8) + 32
+        return (degrees - 32) / 1.8
     }
 }

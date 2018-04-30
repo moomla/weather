@@ -9,7 +9,7 @@
 import XCTest
 @testable import Weather
 
-class WeatherDataModelsTests: XCTestCase {
+class WeatherDataModelsTests: WeatherBaseTests {
     
     var city: City?
     var weather: WeatherData?
@@ -33,15 +33,24 @@ class WeatherDataModelsTests: XCTestCase {
     }
     
     func test_weatherInitialization() {
-        let testBundle = Bundle(for: type(of: self))
-        let pathUrl = testBundle.url(forResource: "londonWeather", withExtension: "txt")
-        guard let responce = JsonReader<WeatherDataServerResponce>.objectFromFileAtPath(pathUrl) else {
-            XCTFail("error reading weather responce")
-            return
-        }
-        weather = WeatherData(response: responce)
+        weather = instantiateLondonWeather()
         XCTAssertEqual(weather?.name, "London")
         XCTAssertEqual(weather?.id, 2643743)
     }
     
+    func test_weatherMetricSystemChange() {
+        let deegries: Float = 10
+        weather = instantiateLondonWeather()
+        weather?.metricSystem = .celsius
+        weather?.temp = deegries
+        weather?.metricSystem = .fahrenheit
+        XCTAssertEqual(weather?.metricSystem, .fahrenheit)
+        XCTAssertEqual(weather?.metricSystem.sign(), "F")
+        XCTAssertEqual(weather?.temp, 50)
+        
+        weather?.metricSystem = .celsius
+        XCTAssertEqual(weather?.metricSystem, .celsius)
+        XCTAssertEqual(weather?.metricSystem.sign(), "C")
+        XCTAssertEqual(weather?.temp, deegries)
+    }
 }

@@ -10,8 +10,13 @@ import UIKit
 
 class WeatherService {
     
-    let weatherProvider: WeatherDataProvider = DataProvidersFactory.weatherDataProvider()
-    let citiesProvider: CitiesDataProvider = DataProvidersFactory.citiesDataProvider()
+    var weatherProvider: WeatherDataProvider
+    var citiesProvider: CitiesDataProvider
+    
+    init(weatherProvider: WeatherDataProvider, citiesDataProvider: CitiesDataProvider) {
+        self.weatherProvider = weatherProvider
+        self.citiesProvider = citiesDataProvider
+    }
     
     func loadWeather(in city: City, metricSystem: DegreesMetricSystem, completion: @escaping (WeatherData?, Error?) -> ()) {
         weatherProvider.loadWeather(in: city, metricSystem: metricSystem, completion: completion)
