@@ -97,38 +97,6 @@
             endingLineNumber = "29"
             landmarkName = "testWhenEmptyList_noCitiesAreReturned()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "WeatherTests.WeatherTests.testWhenEmptyList_noCitiesAreReturned() -&gt; ()"
-                  moduleName = "WeatherTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dv51343/Projects/Weather/WeatherTests/WeatherTests.swift"
-                  timestampString = "546709268.1019469"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "431">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #1 : @autoclosure () throws -&gt; Swift.Optional&lt;Any&gt; in WeatherTests.WeatherTests.testWhenEmptyList_noCitiesAreReturned() -&gt; ()"
-                  moduleName = "WeatherTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dv51343/Projects/Weather/WeatherTests/WeatherTests.swift"
-                  timestampString = "546709268.103448"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "12">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

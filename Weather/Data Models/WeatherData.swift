@@ -86,6 +86,7 @@ struct WeatherDataServerResponce: Codable {
         }
     }
     
+    
     init(response: WeatherDataServerResponce) {
         id = response.id
         name = response.name

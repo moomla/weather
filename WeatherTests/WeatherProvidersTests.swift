@@ -9,7 +9,7 @@
 import XCTest
 @testable import Weather
 
-class WeatherTests: XCTestCase {
+class WeatherProvidersTests: XCTestCase {
     
     var dataProvider: WeatherService? = WeatherService()
     var citiesDataProvider: CitiesFileDataProvider = CitiesFileDataProvider()
@@ -35,5 +35,12 @@ class WeatherTests: XCTestCase {
         let cities = citiesDataProvider.citiesListFromFileAtPath(pathUrl)
         XCTAssertEqual(cities?.count, 2)
     }
+    
+//    func testWhenUsingMockList_2CitiesAreReturned() {
+//        let testBundle = Bundle(for: type(of: self))
+//        let pathUrl = testBundle.url(forResource: "cities_mock", withExtension: "txt")
+//        let cities = citiesDataProvider.citiesListFromFileAtPath(pathUrl)
+//        XCTAssertEqual(cities?.count, 2)
+//    }
     
 }
