@@ -18,6 +18,8 @@ class CitiesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Locations"
+        view.accessibilityIdentifier = "citiesListScreen"
+        tableView.accessibilityIdentifier = "citiesTable"
         cities = dataProvider?.citiesList()
     }
 
@@ -48,6 +50,7 @@ extension CitiesViewController: UITableViewDelegate, UITableViewDataSource {
         if let city = cities?[indexPath.row] {
             cell.textLabel?.text = city.city
         }
+        cell.accessibilityIdentifier = String(indexPath.row)
         return cell
     }
     

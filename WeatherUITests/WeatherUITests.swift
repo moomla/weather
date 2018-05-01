@@ -9,7 +9,9 @@
 import XCTest
 
 class WeatherUITests: XCTestCase {
-        
+    
+    var app: XCUIApplication!
+    
     override func setUp() {
         super.setUp()
         
@@ -18,9 +20,9 @@ class WeatherUITests: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
         // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-        XCUIApplication().launch()
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        app = XCUIApplication()
+        app.launchArguments.append("--uitesting")
+        app.launch()
     }
     
     override func tearDown() {
@@ -28,9 +30,76 @@ class WeatherUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func loadAndTapOnLondonCell() {
+        assertCitiesDisplay()
+        
+        //find cell
+        let tableView = app.tables["citiesTable"]
+        let cell = tableView.cells.containing(.cell, identifier: "0")
+        let cellLabelText = cell.staticTexts.element(boundBy: 0).label
+        XCTAssertEqual(cellLabelText, "London")
+        
+        //tap the cell
+        cell.staticTexts.element(boundBy: 0).tap()
+        
+        //assert we are in the weather screen
+        XCTAssertTrue(app.isDisplayingWeatherDetails)
     }
     
+    func testStart() {
+        loadAndTapOnLondonCell()
+        
+        checkWeatherDataView()
+//        checkNoDataView()
+        
+        backToCitiesScreen()
+    }
+    
+    func checkWeatherDataView() {
+        //no data is not presented
+        XCTAssertFalse(app.isDisplayingNoDataScreen)
+        
+        //assert the label are being populated
+        let title = app.weatherDetailsScreenElement.staticTexts["cityNameLabel"]
+        XCTAssertNotNil(title.exists)
+        XCTAssertEqual(title.label, "London")
+        XCTAssertNotNil(app.images["iconView"].exists)
+        XCTAssertNotEqual(app.staticTexts["cityNameLabel"].label, "Label")
+        XCTAssertNotEqual(app.staticTexts["descriptionLabel"].label, "Label")
+        XCTAssertNotEqual(app.staticTexts["currentTempLabel"].label, "Label")
+        XCTAssertNotEqual(app.staticTexts["tempRangeLabel"].label, "Label")
+        
+        //check metric system buttons taps change the state
+        app.weatherDetailsScreenElement.buttons["celsiusButton"].tap()
+        let currentTempText = app.weatherDetailsScreenElement.staticTexts["currentTempLabel"].label
+        app.weatherDetailsScreenElement.buttons["fahrenheitButton"].tap()
+        var currentTempLabelChanged = app.weatherDetailsScreenElement.staticTexts["currentTempLabel"].label
+        XCTAssertNotEqual(currentTempText, currentTempLabelChanged)
+        app.weatherDetailsScreenElement.buttons["celsiusButton"].tap()
+        currentTempLabelChanged = app.weatherDetailsScreenElement.staticTexts["currentTempLabel"].label
+        XCTAssertEqual(currentTempText, currentTempLabelChanged)
+        
+    }
+    
+    func backToCitiesScreen(){
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        assertCitiesDisplay()
+    }
+    
+    func assertCitiesDisplay() {
+        //assert we are in the cities screen
+        XCTAssertTrue(app.isDisplayingCitiesList)
+        
+        //find table
+        let tableView = app.tables["citiesTable"]
+        XCTAssert(tableView.cells.count == 25)
+    }
+    
+    
+    func checkNoDataView() {
+        XCTAssertTrue(app.isDisplayingNoDataScreen)
+        let errorLabelShown = app.noDataScreenView.staticTexts["errorLabel"].exists
+        let loadingIsShown = app.noDataScreenView.activityIndicators["activityIndicator"].exists
+        XCTAssertTrue(errorLabelShown || loadingIsShown)
+    }
 }

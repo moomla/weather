@@ -41,6 +41,7 @@ class WeatherDataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Current weather"
+        view.accessibilityIdentifier = "weatherDetailsScreen"
         self.celsiusButton.setTitle("C", for: .normal)
         self.fahrenheitButton.setTitle("F", for: .normal)
         let buttonTextColor = UIColor(red: 0, green: 0x86, blue: 0xB3)
@@ -50,8 +51,19 @@ class WeatherDataViewController: UIViewController {
         self.fahrenheitButton.layer.borderColor = buttonTextColor.cgColor
         self.celsiusButton.layer.borderWidth = 1
         self.fahrenheitButton.layer.borderWidth = 1
+        
         self.noDataView.isHidden = false
-        self.errorLabel.isHidden = true
+        self.noDataView.accessibilityIdentifier = "noDataView"
+        self.errorLabel.accessibilityIdentifier = "errorLabel"
+        self.activityIndicator.accessibilityIdentifier = "activityIndicator"
+        self.titleLabel.accessibilityIdentifier = "cityNameLabel"
+        self.currentTempLabel.accessibilityIdentifier = "currentTempLabel"
+        self.descriptionLabel.accessibilityIdentifier = "descriptionLabel"
+        self.celsiusButton.accessibilityIdentifier = "celsiusButton"
+        self.fahrenheitButton.accessibilityIdentifier = "fahrenheitButton"
+        self.iconView.accessibilityIdentifier = "iconView"
+        self.tempRangeLabel.accessibilityIdentifier = "tempRangeLabel"
+        
         if self.weatherData != nil {
             updateView()
         }
